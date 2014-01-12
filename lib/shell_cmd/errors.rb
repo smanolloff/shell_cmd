@@ -3,9 +3,9 @@
 class ShellCmdError < RuntimeError
   attr_reader :command
 
-  def initialize(command)
+  def initialize(command, message = "Command failed")
     @command = command
-    super("Command failed")
+    super(message)
   end
 
   def report_to_file(file)
