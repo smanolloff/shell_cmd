@@ -29,17 +29,38 @@ describe CommandResult do
       (Emily Dickinson 1830-1886)
     END
 
+  context 'when the command exists' do
+    its(:report) do
+      should eq(<<-END.gsub(/^ {8}/, '')
+         ---- Command (sanitized when executing):
+        echo '-e' '\\n this!'
+         ---- Execution details:
+        PID 1234, exit status 0
+         ---- Outputs (STDOUT and STDERR):
 
-  its(:report) do
-    should eq(<<-END.gsub(/^ {6}/, '')
-       ---- Command (sanitized when executing):
-      echo '-e' '\\n this!'
-       ---- Execution details:
-      PID 1234, exit status 0
-       ---- Outputs (STDOUT and STDERR):
+         this!
+        END
+      )
+    end
+  end
 
-       this!
-      END
-    )
+  context 'when the command does not exist' do
+    it 'also has a report' do
+      cmd = ShellCmd.new('nonexistingcommand')
+      begin
+        cmd.execute
+      rescue ShellCmdError => e
+        expect(e.command.result.report).to eq(
+          <<-END.gsub(/^ {10}/, '')
+           ---- Command (sanitized when executing):
+          nonexistingcommand 
+           ---- Execution details:
+          PID (none), exit status 127
+           ---- Outputs (STDOUT and STDERR):
+          (none)
+          END
+        )
+      end
+    end
   end
 end

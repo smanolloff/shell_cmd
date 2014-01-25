@@ -59,9 +59,20 @@ describe ShellCmd do
       expect(cmd.execute.output).to eq("cat and dog\n") 
     end
 
-    it 'raises if the command is not found' do
-      cmd = ShellCmd.new('unknowncommand')
-      expect { cmd.execute }.to raise_error(ShellCmdError)
+    context 'when the command is not found' do
+      it 'raises a ShellCmdError' do
+        cmd = ShellCmd.new('unknowncommand')
+        expect { cmd.execute }.to raise_error(ShellCmdError)
+      end
+
+      it 'includes a result in the error' do
+        cmd = ShellCmd.new('unknowncommand')
+        begin
+          cmd.execute
+        rescue ShellCmdError => e
+          expect(e.command.result).to be_an_instance_of(CommandResult)
+        end
+      end
     end
 
     it 'raises if the command did not succeed' do

@@ -17,7 +17,7 @@ class ShellCmd
   def add_arguments(*arguments)
     arguments.each { |arg| add_argument(arg) }
     self
-  end 
+  end
 
   def illustrate
     args = arguments.map { |arg| "'#{arg}'" }.join(' ')
@@ -28,12 +28,13 @@ class ShellCmd
     begin
       io = IO.popen([
         environment,
-        command, 
-        *arguments, 
+        command,
+        *arguments,
         err: [:child, :out]
       ])
       output = io.read
     rescue Errno::ENOENT => err
+      @result = CommandResult.new(self, NullProcess, "(none)\n")
       raise ShellCmdError, self
     ensure
       if defined?(io) && io.respond_to?(:close)
@@ -42,7 +43,7 @@ class ShellCmd
     end
 
     @result = CommandResult.new(self, $?, output)
-    unless result.success? 
+    unless result.success?
       raise ShellCmdError, self
     end
     result
@@ -55,5 +56,7 @@ require 'shell_cmd/error_file'
 require 'shell_cmd/errors'
 require 'shell_cmd/shell_environment'
 require 'shell_cmd/command_result'
+require 'shell_cmd/null_process'
+
 
 
