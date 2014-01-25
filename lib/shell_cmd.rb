@@ -34,7 +34,7 @@ class ShellCmd
       ])
       output = io.read
     rescue Errno::ENOENT => err
-      @result = CommandResult.new(self, NullProcess, "(none)\n")
+      @result = CommandResult.new(self, NullProcess, "Command not found.\n")
       raise ShellCmdError, self
     ensure
       if defined?(io) && io.respond_to?(:close)

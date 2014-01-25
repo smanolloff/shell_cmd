@@ -57,7 +57,7 @@ describe CommandResult do
            ---- Execution details:
           PID (none), exit status 127
            ---- Outputs (STDOUT and STDERR):
-          (none)
+          Command not found.
           END
         )
       end
