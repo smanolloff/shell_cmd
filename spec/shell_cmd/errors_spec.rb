@@ -22,27 +22,14 @@ describe ShellCmdError do
   its(:command) { should be(cmd) }
 
   describe '#report_to_file' do
-    context 'when a result is not available' do
-      before :each do
-        allow(cmd).to receive(:result).and_return(nil)
-        error.report_to_file(errors_dir)
-      end
-
-      it 'creates an error file with the right content' do
-        expect(error_report).to eq("Command not found -- command")
-      end
+    before :each do
+      result = double("result", :report => "the report")
+      allow(cmd).to receive(:result).and_return(result)
+      error.report_to_file(errors_dir)
     end
 
-    context 'when a result is available' do
-      before :each do
-        result = double("result", :report => "the report")
-        allow(cmd).to receive(:result).and_return(result)
-        error.report_to_file(errors_dir)
-      end
-
-      it 'creates an error file with the right content' do
-        expect(error_report).to eq("the report")
-      end
+    it 'creates an error file with the right content' do
+      expect(error_report).to eq("the report")
     end
   end
 end

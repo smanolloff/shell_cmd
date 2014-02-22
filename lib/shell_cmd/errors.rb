@@ -8,14 +8,10 @@ class ShellCmdError < RuntimeError
     super(message)
   end
 
-  def report_to_file(file)
-    if command.result
-      report = command.result.report
-    else
-      report = "Command not found -- #{command.command}"
-    end
+  def report_to_file(dir)
+    report = command.result.report
 
-    errfile = ErrorFile.new(file)
+    errfile = ErrorFile.new(dir)
     errfile.write(report)
     errfile.filename
   end

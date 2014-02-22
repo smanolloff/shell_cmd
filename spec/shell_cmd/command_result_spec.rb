@@ -20,25 +20,16 @@ describe CommandResult do
   its(:pid) { should eq(1234) }
   its(:success?) { should eq(true) }
 
-
-    @text = <<-END.gsub(/^ {6}/, '')
-      "Faith" is a fine invention
-      When Gentlemen can see
-      But Microscopes are prudent
-                 In an Emergency.
-      (Emily Dickinson 1830-1886)
-    END
-
   context 'when the command exists' do
     its(:report) do
-      should eq(<<-END.gsub(/^ {8}/, '')
-         ---- Command (sanitized when executing):
-        echo '-e' '\\n this!'
-         ---- Execution details:
-        PID 1234, exit status 0
-         ---- Outputs (STDOUT and STDERR):
-
-         this!
+      should eq(<<-END.gsub(/^\s+\|/, '')
+        | ---- Command (sanitized when executing):
+        |echo '-e' '\\n this!'
+        | ---- Execution details:
+        |PID 1234, exit status 0
+        | ---- Outputs (STDOUT and STDERR):
+        |
+        | this!
         END
       )
     end
@@ -51,13 +42,13 @@ describe CommandResult do
         cmd.execute
       rescue ShellCmdError => e
         expect(e.command.result.report).to eq(
-          <<-END.gsub(/^ {10}/, '')
-           ---- Command (sanitized when executing):
-          nonexistingcommand 
-           ---- Execution details:
-          PID (none), exit status 127
-           ---- Outputs (STDOUT and STDERR):
-          Command not found.
+          <<-END.gsub(/^\s+\|/, '')
+          | ---- Command (sanitized when executing):
+          |nonexistingcommand 
+          | ---- Execution details:
+          |PID (none), exit status 127
+          | ---- Outputs (STDOUT and STDERR):
+          |Command not found.
           END
         )
       end
