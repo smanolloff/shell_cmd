@@ -25,31 +25,23 @@ class ShellCmd
   end
 
   def execute
-    begin
-      io = IO.popen([
-        environment,
-        command,
-        *arguments,
-        err: [:child, :out]
-      ])
-      output = io.read
-    rescue Errno::ENOENT => err
-      @result = CommandResult.new(self, NullProcess, "Command not found.\n")
-      raise ShellCmdError, self
-    ensure
-      if defined?(io) && io.respond_to?(:close)
-        io.close
-      end
-    end
-
-    @result = CommandResult.new(self, $?, output)
+    @result = popen_exec
     unless result.success?
-      raise ShellCmdError, self
+      fail ShellCmdError, self 
     end
     result
   end
 
   alias_method :run, :execute
+
+private
+  def popen_exec
+    popen_args = [environment, command, *arguments, err: [:child, :out]]
+    out = IO.popen(popen_args) { |io| io.read }
+    CommandResult.new(self, $?, out)
+  rescue Errno::ENOENT => err
+    CommandResult.new(self, NullProcess, "Command not found.\n")
+  end
 end
 
 require 'shell_cmd/error_file'

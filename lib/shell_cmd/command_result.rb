@@ -15,11 +15,11 @@ class CommandResult
 
   def report
     lines = [
-      " ---- Command (sanitized when executing):",
+      ' ---- Command (sanitized when executing):',
       command.illustrate,
-      " ---- Execution details:",
+      ' ---- Execution details:',
       "PID #{pid}, exit status #{exit_code}",
-      " ---- Outputs (STDOUT and STDERR):",
+      ' ---- Outputs (STDOUT and STDERR):',
       output
     ]
 

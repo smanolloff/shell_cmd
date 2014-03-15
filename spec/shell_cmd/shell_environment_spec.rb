@@ -7,7 +7,7 @@ describe ShellEnvironment do
 
   describe '.new' do
     it 'also accepts a list of variables' do
-      expect { ShellEnvironment.new }.not_to raise_error
+      expect { env }.not_to raise_error
     end
   end
 

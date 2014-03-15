@@ -43,26 +43,26 @@ describe ErrorFile do
 
   describe '#write' do
     before do
-      # Just initialize. 
+      # Just initialize (empty file)
       error_file
     end
 
     it 'writes the given string to the file' do
-      expect { error_file.write("some content") }.
-        to change { File.read(filename) }.from("").to("some content")
+      expect { error_file.write('some content') }.
+        to change { File.read(filename) }.from('').to('some content')
     end
 
     it 'keeps previous writes' do
-      error_file.write("previous content.")
+      error_file.write('previous content.')
 
-      expect { error_file.write("next content.") }.
-        to change { File.read(filename) }.to("previous content.next content.")
+      expect { error_file.write('next content.') }.
+        to change { File.read(filename) }.to('previous content.next content.')
     end
   end
 
   describe '#delete' do
     before do
-      # Just initialize. 
+      # Just initialize (empty file)
       error_file
     end
     

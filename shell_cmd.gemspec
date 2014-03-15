@@ -8,7 +8,7 @@ Gem::Specification.new do |spec|
   spec.version       = ShellCmd::VERSION
   spec.authors       = ["Simeon Manolov"]
   spec.email         = ["s.manolloff@gmail.com"]
-  spec.summary       = %q{Execute shell commands easily.}
+  spec.summary       = %q{Execute shell commands with ease.}
   spec.homepage      = ""
   spec.license       = "MIT"
 

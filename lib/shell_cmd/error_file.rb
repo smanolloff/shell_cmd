@@ -9,9 +9,7 @@ class ErrorFile
   end
 
   def write(content)
-    File.open(@filename, 'a') do |f|
-      f.write(content)
-    end
+    File.open(@filename, 'a') { |f| f.write(content) }
   end
 
   def delete
@@ -21,18 +19,17 @@ class ErrorFile
   private
   def self.generate_name(dir)
     unless File.directory?(dir)
-      raise ArgumentError, "Directory does not exist: #{dir}" 
+      fail ArgumentError, "Directory does not exist: #{dir}" 
     end
 
-    timestamp = Time.now.to_i
-    filename  = File.join(dir, "error_#{timestamp}")
-
-    10.times do |i|
-      return filename unless File.exists?(filename)
-      filename = File.join(dir, "error_#{timestamp}-#{i}")
+    base = File.join(dir, "error_#{Time.now.to_i}")
+    suffix = ''
+    failed = 10.times do |i|
+      break unless File.exists?(base + suffix)
+      suffix = "-#{i}"
     end
+    fail "Failed to generate filename in #{dir} (10 attempts)" if failed
 
-    # Loop exited normally -- no suitable name was found
-    raise "Failed to generate filename in #{dir}"
+    base + suffix
   end
 end
