@@ -1,6 +1,6 @@
 # ShellCmd
 
-TODO: Write a gem description
+Yet another gem for executing shell commands
 
 ## Installation
 
@@ -18,7 +18,37 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+Execute commands:
+
+    require 'shell_cmd'
+
+    cmd = ShellCmd.new('uname', '-m')
+    result = cmd.execute
+
+    result.output
+    # => "x86_64\n"
+    result.exit_code
+    # => 0
+
+    cmd.add_arguments('-r', '--kernel-version').execute.output
+    # => "2.6.32-431.el6.x86_64 #1 SMP Fri Nov 22 03:15:09 UTC 2013 x86_64\n"
+
+    cmd.illustrate
+    # => "uname '-m' '-r' '--kernel-version'"
+
+Write reports:
+  
+    bad_cmd = ShellCmd.new('cat', '/non/existing/file')
+
+    begin
+      bad_cmd.execute
+    rescue ShellCmdError => error
+      errors_dir = '/tmp'
+      error.report_to_file(errors_dir)
+    end
+    # => /tmp/error_1394961663
+
+
 
 ## Contributing
 
