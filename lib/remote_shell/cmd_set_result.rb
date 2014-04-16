@@ -12,11 +12,11 @@ class RemoteShell::CmdSetResult
 
   def report
     report_ary = []
-    @results.each_with_index do |result, i|
-      report_ary << " ---- (#{i + 1}) Command (sanitized during execution):"
+    @results.each.with_index(1) do |result, i|
+      report_ary << " ---- (#{i}) Command (sanitized during execution):"
       report_ary << result.cmd.illustrate
-      report_ary << " ---- (#{i + 1}) Exit status: #{result.ecode}"
-      report_ary << " ---- (#{i + 1}) Outputs (STDOUT and STDERR):"
+      report_ary << " ---- (#{i}) Exit status: #{result.ecode}"
+      report_ary << " ---- (#{i}) Outputs (STDOUT and STDERR):"
       report_ary << result.output
     end
     report_ary.join("\n")

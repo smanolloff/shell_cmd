@@ -8,8 +8,8 @@ class RemoteShell::CmdSet < Array
   end
 
   def add_command(command)
-    unless command.is_a?(ShellCmd) 
-      raise ArgumentError, 'Expected a ShellCmd instance'
+    unless command.is_a?(ShellCmd)
+      fail ArgumentError, 'Expected a ShellCmd instance'
     end
 
     push(command)
@@ -24,7 +24,6 @@ class RemoteShell::CmdSet < Array
         cmd_string = Shellwords.escape(cmd.command) + ' '
         cmd_string += cmd.arguments.map { |a| Shellwords.escape(a) }.join(' ')
 
-        
         if failed && fail_fast
           output = ''
           exit_code = 'N/A'
@@ -37,7 +36,7 @@ class RemoteShell::CmdSet < Array
       end
     end
 
-    raise RemoteShell::CmdSetError.new(self) if failed
+    fail RemoteShell::CmdSetError.new(self) if failed
     result
   end
 
