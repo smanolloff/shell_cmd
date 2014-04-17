@@ -21,13 +21,13 @@ class ShellCmd
 
   def illustrate
     args = arguments.map { |arg| "'#{arg}'" }.join(' ')
-    "#{command} #{args}"
+    "#{command} #{args}".strip
   end
 
   def execute
     @result = popen_exec
     unless result.success?
-      fail ShellCmdError, self 
+      fail ShellCmdError, self
     end
     result
   end

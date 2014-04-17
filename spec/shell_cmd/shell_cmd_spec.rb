@@ -56,7 +56,7 @@ describe ShellCmd do
 
     it 'executes the command' do
       cmd = ShellCmd.new('echo', 'cat', 'and dog')
-      expect(cmd.execute.output).to eq("cat and dog\n") 
+      expect(cmd.execute.output).to eq("cat and dog\n")
     end
 
     context 'when the command is not found' do

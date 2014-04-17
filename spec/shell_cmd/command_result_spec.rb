@@ -44,7 +44,7 @@ describe CommandResult do
         expect(e.command.result.report).to eq(
           <<-END.gsub(/^\s+\|/, '')
           | ---- Command (sanitized when executing):
-          |nonexistingcommand 
+          |nonexistingcommand
           | ---- Execution details:
           |PID (none), exit status 127
           | ---- Outputs (STDOUT and STDERR):

@@ -12,7 +12,7 @@ describe ShellEnvironment do
   end
 
   it 'can be compared to a hash' do
-    expect(env).to eq({ 'lemon' => 'yellow', 'tomato' => 'red' }) 
+    expect(env).to eq({ 'lemon' => 'yellow', 'tomato' => 'red' })
   end
 
   describe '#get' do

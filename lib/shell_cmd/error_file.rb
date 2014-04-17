@@ -19,7 +19,7 @@ class ErrorFile
   private
   def self.generate_name(dir)
     unless File.directory?(dir)
-      fail ArgumentError, "Directory does not exist: #{dir}" 
+      fail ArgumentError, "Directory does not exist: #{dir}"
     end
 
     base = File.join(dir, "error_#{Time.now.to_i}")

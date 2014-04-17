@@ -65,7 +65,7 @@ describe ErrorFile do
       # Just initialize (empty file)
       error_file
     end
-    
+
     it 'deletes the file' do
       expect { error_file.delete }.
         to change { File.file?(filename) }.from(true).to(false)
