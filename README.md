@@ -50,8 +50,8 @@ Write reports:
 
 
 ## Tests
-Note that, depending on your system, tests may fail.
-For example, one of the tests uses "echo -e ...", which behaves differently on Mac OS, where /bin/echo does not accept '-e'.
+Note that, depending on your system, tests may fail -- many of them assume coreutils >= 8
+For example, one of the tests uses "echo -e ...", which behaves differently on Mac OS, where /bin/echo does not accept '-e'
 
 ## Contributing
 
