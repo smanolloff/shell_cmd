@@ -49,6 +49,9 @@ Write reports:
     # => /tmp/error_1394961663
 
 
+## Tests
+Note that, depending on your system, tests may fail.
+For example, one of the tests uses "echo -e ...", which behaves differently on Mac OS, where /bin/echo does not accept '-e'.
 
 ## Contributing
 

@@ -9,6 +9,7 @@ describe CommandResult do
   end
 
   let(:cmd) { ShellCmd.new('echo', '-e', '\n this!') }
+  let(:environment) { {'BABA' => 'pena', 'DEDO' => 'spas'} }
   let(:result) { cmd.execute }
 
 
@@ -21,12 +22,16 @@ describe CommandResult do
   its(:success?) { should eq(true) }
 
   context 'when the command exists' do
+    before(:each) { cmd.environment.set(environment) }
+
     its(:report) do
       should eq(<<-END.gsub(/^\s+\|/, '')
         | ---- Command (sanitized when executing):
         |echo '-e' '\\n this!'
         | ---- Execution details:
         |PID 1234, exit status 0
+        | ---- Process-specific environment variables:
+        |BABA=pena DEDO=spas
         | ---- Outputs (STDOUT and STDERR):
         |
         | this!
@@ -38,6 +43,8 @@ describe CommandResult do
   context 'when the command does not exist' do
     it 'also has a report' do
       cmd = ShellCmd.new('nonexistingcommand')
+      cmd.environment.set(environment)
+
       begin
         cmd.execute
       rescue ShellCmdError => e
@@ -47,6 +54,8 @@ describe CommandResult do
           |nonexistingcommand
           | ---- Execution details:
           |PID (none), exit status 127
+          | ---- Process-specific environment variables:
+          |BABA=pena DEDO=spas
           | ---- Outputs (STDOUT and STDERR):
           |Command not found.
           END
