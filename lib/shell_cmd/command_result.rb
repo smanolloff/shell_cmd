@@ -19,8 +19,6 @@ class CommandResult
       command.illustrate,
       ' ---- Execution details:',
       "PID #{pid}, exit status #{exit_code}",
-      ' ---- Process-specific environment variables:',
-      command.environment.to_a.map { |pair| pair.join('=') }.join(' '),
       ' ---- Outputs (STDOUT and STDERR):',
       output
     ]

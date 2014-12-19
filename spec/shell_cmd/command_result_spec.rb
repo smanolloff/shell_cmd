@@ -27,11 +27,9 @@ describe CommandResult do
     its(:report) do
       should eq(<<-END.gsub(/^\s+\|/, '')
         | ---- Command (sanitized when executing):
-        |echo '-e' '\\n this!'
+        |BABA=pena DEDO=spas echo -e \\\\n\\ this\\!
         | ---- Execution details:
         |PID 1234, exit status 0
-        | ---- Process-specific environment variables:
-        |BABA=pena DEDO=spas
         | ---- Outputs (STDOUT and STDERR):
         |
         | this!
@@ -51,11 +49,9 @@ describe CommandResult do
         expect(e.command.result.report).to eq(
           <<-END.gsub(/^\s+\|/, '')
           | ---- Command (sanitized when executing):
-          |nonexistingcommand
+          |BABA=pena DEDO=spas nonexistingcommand
           | ---- Execution details:
           |PID (none), exit status 127
-          | ---- Process-specific environment variables:
-          |BABA=pena DEDO=spas
           | ---- Outputs (STDOUT and STDERR):
           |Command not found.
           END

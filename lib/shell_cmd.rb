@@ -20,8 +20,9 @@ class ShellCmd
   end
 
   def illustrate
-    args = arguments.map { |arg| "'#{arg}'" }.join(' ')
-    "#{command} #{args}".strip
+    args = arguments.map { |arg| Shellwords.escape(arg) }.join(' ')
+    env = environment.map { |pair| pair.join('=') }.join(' ')
+    "#{env} #{command} #{args}".strip
   end
 
   def execute
