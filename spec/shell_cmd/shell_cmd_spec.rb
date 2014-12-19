@@ -3,7 +3,7 @@ require 'spec_helper'
 describe ShellCmd do
   before :each do
     ErrorFile.any_instance.stub(:write => 1)
-    cmd.environment.set('BABA' => 'pena')
+    cmd.environment.set('BABA' => 'pena!', DEDO: 'spas?')
   end
 
   # NOTE: Tests are OS-specific.
@@ -38,7 +38,7 @@ describe ShellCmd do
 
   describe '#illustrate' do
     it 'returns the command in a human-friendly form' do
-      expect(cmd.illustrate).to eq('BABA=pena cat --dog \=\ kaboom\!')
+      expect(cmd.illustrate).to eq('BABA=pena\! DEDO=spas\? cat --dog \=\ kaboom\!')
     end
   end
 
